@@ -9,10 +9,10 @@ metadata:
 spec:
   ingressClassName: traefik # reverse proxy
   rules:
-    - host: duniabelanja.krobot.my.id
+    - host: "api-duniabelanja.krobot.my.id"
       http:
         paths:
-          - path: /
+          - path: "/api"
             pathType: Prefix
             backend:
               service:
