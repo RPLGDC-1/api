@@ -24,10 +24,6 @@ spec:
               mountPath: /var/www/html/.env
               subPath: .env
               readOnly: true
-      initContainers:
-        - name: api-migration
-          image: 211104/api:v0.0.3
-          command: ["php", "artisan", "migrate"]
       volumes:
         - name: api-config
           configMap:
