@@ -1,14 +1,3 @@
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: mw-api
-spec:
-  stripPrefix:
-    forceSlash: false
-    prefixes:
-      - /
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -17,14 +6,24 @@ metadata:
     # config http
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: dunia-belanja-mw-api@kubernetescrd
+
 spec:
   ingressClassName: traefik # reverse proxy
   rules:
-    - host: api-duniabelanja.krobot.my.id
+    - host: "api-duniabelanja.krobot.my.id"
       http:
         paths:
-          - path: /
+          - path: "/api"
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 80
+    - host: "admin-duniabelanja.krobot.my.id"
+      http:
+        paths:
+          - path: "/"
             pathType: Prefix
             backend:
               service:

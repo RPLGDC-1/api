@@ -17,7 +17,7 @@ data:
     DB_CONNECTION=mysql
     DB_HOST=dunia-belanja-db-mysql.dunia-belanja.svc.cluster.local
     DB_PORT=3306
-    DB_DATABASE=dunia_belanja
+    DB_DATABASE=duniabelanja
     DB_USERNAME=dev-aselab
     DB_PASSWORD=benhilbanjir12345
 
