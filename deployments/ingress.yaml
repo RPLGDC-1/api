@@ -6,6 +6,7 @@ metadata:
     # config http
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
+
 spec:
   ingressClassName: traefik # reverse proxy
   rules:
@@ -13,6 +14,16 @@ spec:
       http:
         paths:
           - path: "/api"
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 80
+    - host: "admin-duniabelanja.krobot.my.id"
+      http:
+        paths:
+          - path: "/"
             pathType: Prefix
             backend:
               service:
