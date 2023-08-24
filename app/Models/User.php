@@ -11,4 +11,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens;
+
+    public CONST ROLE_ADMIN = 'admin';
+    public CONST ROLE_CUSTOMER = 'user';
+
+    protected $guarded = [];
+    protected $hidden = ['password', 'remember_token'];
 }
