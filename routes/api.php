@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/categories', [CategoryController::class, 'index']);
+// Route::domain('api-duniabelanja.')->group(function() {
+  Route::post('/login', [AuthController::class, 'login']);
+  Route::post('/register', [AuthController::class, 'register']);
+  Route::get('/products', [ProductController::class, 'index']);
+  Route::get('/categories', [CategoryController::class, 'index']);
 
-Route::middleware('auth:sanctum')->group(function() {
-  Route::get('/profile', [AccountController::class, 'profile']);
-});
+  Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/profile', [AccountController::class, 'profile']);
+  });
+// });
