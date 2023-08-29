@@ -40,6 +40,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
         with:
+          repository: 'RPLGDC-1/api'
           token: ${{ github.token }}
 
       - name: Setup git
@@ -53,7 +54,7 @@ jobs:
           cd ./deployments
           ls
           cat deployment.yaml
-          sed -i "s+211104/api:v0.0.6+211104/api:app-v0.$RUN_NUMBER+g" deployment.yaml
+          sed -i "s+211104/api:v0.0.6+211104/api:app-$RUN_NUMBER+g" deployment.yaml
           cat deployment.yaml
       - name: Commit changes
         run: |
