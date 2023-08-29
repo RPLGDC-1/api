@@ -32,22 +32,31 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs: build
 
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-      
-      - name: Modify image
+        with:
+          token: ${{ github.token }}
+
+      - name: Setup git
         run: |
           git config user.email "yazid.al2418@gmail.com"
           git config user.name "Yazid Al Ghozali"
+      
+      - name: Update deployment
+        run: |
           pwd
           cd ./deployments
           ls
           cat deployment.yaml
           sed -i "s+211104/api:v0.0.6+211104/api:app-$RUN_NUMBER+g" deployment.yaml
           cat deployment.yaml
+      - name: Commit changes
+        run: |
           git add .
           git commit -m "Done  by Github Actions   Job changemanifest: ${{ github.run_number }}"
           git push origin main
