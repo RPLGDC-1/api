@@ -53,7 +53,7 @@ jobs:
           cd ./deployments
           ls
           cat deployment.yaml
-          sed -i "s+211104/api:v0.0.6+211104/api:app-$RUN_NUMBER+g" deployment.yaml
+          sed -i "s+211104/api:v0.0.6+211104/api:app-v0.$RUN_NUMBER+g" deployment.yaml
           cat deployment.yaml
       - name: Commit changes
         run: |
