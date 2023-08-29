@@ -40,8 +40,8 @@ jobs:
       
       - name: Modify image
         run: |
-          git config user.email yazid.al2418@gmail.com 
-          git config user.name Yazid Al Ghozali
+          git config user.email "yazid.al2418@gmail.com"
+          git config user.name "Yazid Al Ghozali"
           pwd
           cd ./deployments
           ls
