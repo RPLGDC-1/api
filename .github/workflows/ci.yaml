@@ -54,11 +54,5 @@ jobs:
           cd ./deployments
           ls
           cat deployment.yaml
-          sed -i "s+211104/api:v0.0.6+211104/api:v0.0.${{ github.run_number }}+g" deployment.yaml
+          sed -i "s+211104/api:app-+211104/api:v0.0.${{ github.run_number }}+g" deployment.yaml
           cat deployment.yaml
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update deployment with manifest image version -> ${{ github.run_number }}
-          branch: main
