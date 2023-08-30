@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-env:
-  RUN_NUMBER: ${{ github.run_number }}
 
 jobs: 
   build:
@@ -27,7 +25,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: ${{ secrets.DOCKERHUB_USERNAME }}/api
-          tags: v0.0.${{ env.RUN_NUMBER }}
+          tags: v0.0.${{ github.run_number }}
           file: ./deployments/Dockerfile
           context: .
 
@@ -56,11 +54,13 @@ jobs:
           cd ./deployments
           ls
           cat deployment.yaml
-          sed -i "s+211104/api:v0.0.6+211104/api:v0.0.${{env.RUN_NUMBER}}+g" deployment.yaml
+          sed -i "s+211104/api:v0.0.6+211104/api:v0.0.$RUN_NUMBER+g" deployment.yaml
           cat deployment.yaml
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Apply last deployment
+          commit_message: Update deployment with manifest image version -> ${{ github.run_number }}
           branch: main
