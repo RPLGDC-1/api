@@ -54,7 +54,7 @@ jobs:
           cd ./deployments
           ls
           cat deployment.yaml
-          sed -i "s+211104/api:app-+211104/api:v0.0.${{ github.run_number }}+g" deployment.yaml
+          sed -i 's|image: 211104/api:v0.0.13|image: 211104/api:v0.0.${{github.run_number}}|' deployment.yaml  
           cat deployment.yaml
           git status
       
