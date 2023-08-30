@@ -26,8 +26,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: ${{ secrets.DOCKERHUB_USERNAME }}/api
           tags: v0.0.${{ github.run_number }}
+          push: true
           file: ./deployments/Dockerfile
-          context: .
 
   deploy:
     name: deploy
@@ -56,3 +56,10 @@ jobs:
           cat deployment.yaml
           sed -i "s+211104/api:app-+211104/api:v0.0.${{ github.run_number }}+g" deployment.yaml
           cat deployment.yaml
+          git status
+      
+      - name: Auto commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply latest deployment with manifest ${{ github.run_number }}
+          branch: main
