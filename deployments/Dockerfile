@@ -1,10 +1,8 @@
 FROM php:8.1-alpine
 
-ENV COMPOSER_ALLOW_SUPERUSER 1 
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-
-WORKDIR /var/www/html
 
 RUN apk update && apk add --no-cache \
     libpng-dev \
@@ -12,6 +10,10 @@ RUN apk update && apk add --no-cache \
     freetype-dev \
     zip \
     unzip
+
+WORKDIR /var/www/html
+
+COPY composer.json composer.lock /var/www/html/
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
