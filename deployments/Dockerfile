@@ -1,5 +1,7 @@
 FROM php:8.1-alpine
 
+ENV COMPOSER_ALLOW_SUPERUSER 1 
+
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 WORKDIR /var/www/html
@@ -13,8 +15,6 @@ RUN apk update && apk add --no-cache \
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
-
-ENV COMPOSER_ALLOW_SUPERUSER 1 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
