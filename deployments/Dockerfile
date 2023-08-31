@@ -2,6 +2,8 @@ FROM php:8.1-alpine
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+WORKDIR /var/www/html
+
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN apk update && apk add --no-cache \
@@ -11,14 +13,13 @@ RUN apk update && apk add --no-cache \
     zip \
     unzip
 
-WORKDIR /var/www/html
-
-COPY composer.json composer.lock /var/www/html/
-
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY composer.json /var/www/html/
+COPY composer.lock /var/www/html/
 
 COPY . .
 
