@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::domain('api-duniabelanja.')->group(function() {
-  Route::post('/login', [AuthController::class, 'login']);
-  Route::post('/register', [AuthController::class, 'register']);
-  Route::get('/products', [ProductController::class, 'index']);
-  Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/categories', [CategoryController::class, 'index']);
 
-  Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/profile', [AccountController::class, 'profile']);
-  });
-// });
+Route::post('/transaction/callback', [TransactionController::class, 'callback']);
+
+Route::middleware('auth:sanctum')->group(function() {
+  Route::get('/profile', [AccountController::class, 'profile']);
+  Route::post('/checkout', [TransactionController::class, 'checkout']);
+});

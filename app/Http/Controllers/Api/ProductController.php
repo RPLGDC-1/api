@@ -26,4 +26,9 @@ class ProductController extends Controller
 
         return $this->sendResponse(new PaginationCollection($model->paginate()));
     }
+    
+    public function show(Product $product)
+    {
+        return $this->sendResponse($product);
+    }
 }
