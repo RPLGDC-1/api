@@ -24,7 +24,7 @@ jobs:
         with:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:v0.0.${{ github.run_number }}
           push: true
-          file: ./depolyments/Dockerfile
+          file: Dockerfile
 
   deploy:
     name: deploy
