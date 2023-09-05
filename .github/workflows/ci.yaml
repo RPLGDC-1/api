@@ -60,4 +60,3 @@ jobs:
         with:
           commit_message: Apply latest deployment with manifest ${{ github.run_number }}
           branch: feature/continous-integration
-          create_branch: true
