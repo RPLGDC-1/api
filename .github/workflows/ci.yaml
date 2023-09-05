@@ -59,4 +59,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply latest deployment with manifest ${{ github.run_number }}
-          branch: feature/continous-integration
