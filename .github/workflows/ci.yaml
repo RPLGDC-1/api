@@ -1,6 +1,6 @@
 name: Gitops-CI
 on: 
-  push:
+  pull_request:
     branches:
       - main
 
@@ -22,11 +22,9 @@ jobs:
       - name: Build and push docker image
         uses: docker/build-push-action@v4
         with:
-          repository: ${{ secrets.DOCKERHUB_USERNAME }}/api
-          tags: v0.0.${{ github.run_number }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:v0.0.${{ github.run_number }}
           push: true
-          file: ./deployments/Dockerfile
-          context: ./deployments
+          file: Dockerfile
 
   deploy:
     name: deploy
@@ -53,7 +51,7 @@ jobs:
           cd ./deployments
           ls
           cat deployment.yaml
-          sed -i 's|image: 211104/api:v0.0.13|image: 211104/api:v0.0.${{github.run_number}}|' deployment.yaml  
+          sed -i 's|image: 211104/api:\(v0.0.[0-9]*\)|image: 211104/api:v0.0.${{github.run_number}}|' deployment.yaml  
           cat deployment.yaml
           git status
       
@@ -61,4 +59,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply latest deployment with manifest ${{ github.run_number }}
-          branch: main
