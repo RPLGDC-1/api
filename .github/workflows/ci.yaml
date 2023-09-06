@@ -1,8 +1,10 @@
 name: Gitops-CI
 on: 
-  pull_request:
-    branches:
-      - main
+  push:
+    branches: [main]
+  pull_request_review:
+    types:
+      - submitted
 
 jobs: 
   build:
