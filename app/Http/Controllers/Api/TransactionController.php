@@ -24,6 +24,23 @@ class TransactionController extends Controller
         \Midtrans\Config::$paymentIdempotencyKey = env('MIDTRANS_IDEMPOTENCY_KEY');
     }
 
+    public function checkoutData(Request $request)
+    {
+        $request->validate([
+            'quantity' => 'required|numeric',
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+
+        return $this->sendResponse([
+            'product' => $product,
+            'price' => ($product->selling_price * $request->quantity),
+            'subtotal' => ($product->selling_price * $request->quantity) + 10000,
+            'shipping_price' => 10000,
+        ]);
+    }
+
     public function checkout(Request $request)
     {
         $request->validate([
