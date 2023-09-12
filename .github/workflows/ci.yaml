@@ -56,8 +56,3 @@ jobs:
           sed -i 's|image: 211104/api:\(v0.0.[0-9]*\)|image: 211104/api:v0.0.${{github.run_number}}|' deployment.yaml  
           cat deployment.yaml
           git status
-      
-      - name: Auto commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply latest deployment with manifest ${{ github.run_number }}
