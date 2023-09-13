@@ -67,10 +67,12 @@ jobs:
       
       - name: Update deployment
         run: |
-          sed -i 's|image: 211104/api:v-__TAG__|image: 211104/api:v-${{ steps.sha.outputs.short_sha }}|' deployment.yaml  
+          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-${{ steps.sha.outputs.short_sha }}#" deployment.yaml  
           cat deployment.yaml
-          git status
-          git add .
-          git commit -m "Update image with version: v-${{ steps.sha.outputs.short_sha }}"
-          echo ${{ github }}
-      - run: git push origin main
+      - name: Check Working Tree
+        run: git status
+      
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update image with version: v-${{ steps.sha.outputs.short_sha }}"
