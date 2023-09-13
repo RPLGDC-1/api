@@ -72,5 +72,7 @@ jobs:
       
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          OUTPUT_SHA: ${{ needs.build.outputs.output_sha}}
         with:
-          commit_message: "Update image with version: v-${{ steps.sha.outputs.short_sha }}"
+          commit_message: "Update image with version: v-$OUTPUT_SHA"
