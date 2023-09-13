@@ -5,12 +5,17 @@ on:
   pull_request_review:
     types:
       - submitted
+env:
+  SHA: 
 
 jobs: 
   build:
     name: build
     runs-on: ubuntu-latest
     
+    outputs:
+      output_sha: ${{ steps.sha.outputs.short_sha}}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -54,21 +59,14 @@ jobs:
         run: |
           git config user.email "yazid.al2418@gmail.com"
           git config user.name "Yazid Al Ghozali"
-          echo ${{ steps.sha.outputs.short_sha }}
-      
-      - name: Get short of git commit hash
-        id: sha
-        run: |
-          git_hash=$(git describe --match 'v[0-9]*' --tags --always)
-          echo "::set-output name=short_sha::$git_hash"
-      
-      - name: Print short commit sha
-        run: echo ${{ steps.sha.outputs.short_sha }}
       
       - name: Update deployment
+        env:
+          OUTPUT_SHA: ${{ needs.build.outputs.output_sha}}
         run: |
-          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-${{ steps.sha.outputs.short_sha }}#" deployment.yaml  
+          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-$OUTPUT_SHA#" deployment.yaml  
           cat deployment.yaml
+
       - name: Check Working Tree
         run: git status
       
