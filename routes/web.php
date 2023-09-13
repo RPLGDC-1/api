@@ -15,13 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::domain('admin-duniabelanja.')->group(function() {
 Route::get('/', [AuthController::class, 'index'])->middleware('guest');
 Route::post('/', [AuthController::class, 'login'])->name('login');
-Route::post('/', [AuthController::class, 'dashboard'])->name('login');
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-// });

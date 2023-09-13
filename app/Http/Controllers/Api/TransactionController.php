@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PaginationCollection;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Pipelines\WhereFilter;
 use App\Traits\ApiTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Pipeline;
 
 class TransactionController extends Controller
 {
@@ -22,6 +25,17 @@ class TransactionController extends Controller
         \Midtrans\Config::$appendNotifUrl = env('APP_URL');
         \Midtrans\Config::$overrideNotifUrl = env('APP_URL');
         \Midtrans\Config::$paymentIdempotencyKey = env('MIDTRANS_IDEMPOTENCY_KEY');
+    }
+
+    public function index(Request $request)
+    {
+        $model = Pipeline::send(Transaction::query())
+            ->through([
+                new WhereFilter('status'),
+            ])
+            ->thenReturn();
+
+        return $this->sendResponse(new PaginationCollection($model->paginate()));
     }
 
     public function checkoutData(Request $request)
