@@ -58,7 +58,7 @@ jobs:
       
       - name: Update deployment
         run: |
-          sed -i 's|image: ${{ secrets.DOCKERHUB_USERAME }}/api:\(v0.0.[0-9]*\)|image: ${{ secrets.DOCKERHUB_USERAME }}/api:v-${{ steps.sha.outputs.short_sha }}|' deployment.yaml  
+          sed -i 's|image: 211104/api:v*|image: 211104/api:v-${{ steps.sha.outputs.short_sha }}|' deployment.yaml  
           cat deployment.yaml
           git status
           git add .
