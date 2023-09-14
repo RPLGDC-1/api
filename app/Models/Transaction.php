@@ -10,6 +10,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $guarded = [];
+    public const SHIPPING_PRICE = 100000;
 
     public function product()
     {
