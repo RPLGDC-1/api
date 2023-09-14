@@ -33,7 +33,8 @@ class TransactionController extends Controller
             ->through([
                 new WhereFilter('status'),
             ])
-            ->thenReturn();
+            ->thenReturn()
+            ->with('product');
 
         return $this->sendResponse(new PaginationCollection($model->paginate()));
     }
