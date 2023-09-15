@@ -33,7 +33,8 @@ class TransactionController extends Controller
             ->through([
                 new WhereFilter('status'),
             ])
-            ->thenReturn();
+            ->thenReturn()
+            ->with('product');
 
         return $this->sendResponse(new PaginationCollection($model->paginate()));
     }
@@ -50,8 +51,8 @@ class TransactionController extends Controller
         return $this->sendResponse([
             'product' => $product,
             'price' => ($product->selling_price * $request->quantity),
-            'subtotal' => ($product->selling_price * $request->quantity) + 10000,
-            'shipping_price' => 10000,
+            'subtotal' => ($product->selling_price * $request->quantity) + Transaction::SHIPPING_PRICE,
+            'shipping_price' => Transaction::SHIPPING_PRICE,
         ]);
     }
 
@@ -76,9 +77,13 @@ class TransactionController extends Controller
                 'quantity' => $request->quantity,
                 'phone' => $request->phone,
                 'address' => $request->address,
-                'price' => $product->selling_price * $request->quantity,
                 'status' => 'pending',
                 'user_id' => Auth::id(),
+                
+                // Pricing
+                'price' => ($product->selling_price * $request->quantity),
+                'subtotal' => ($product->selling_price * $request->quantity) + Transaction::SHIPPING_PRICE,
+                'shipping_price' => Transaction::SHIPPING_PRICE,
             ]);
             
             $params = array(
@@ -90,14 +95,14 @@ class TransactionController extends Controller
                 ],
                 'transaction_details' => [
                     'order_id' => $transaction->invoice_number,
-                    'gross_amount' => $transaction->price,
+                    'gross_amount' => $transaction->subtotal,
                 ],
                 'item_details' => [
                     [
                         'id' => $product->id,
                         'name' => $product->name,
-                        'price' => $product->selling_price,
-                        'quantity' => $product->quantity,
+                        'price' => $transaction->subtotal,
+                        'quantity' => 1,
                     ]
                 ],
                 'customer_details' => [
