@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Validation\ValidationException;
+use Intervention\Image\Facades\Image;
 
 trait ImageTrait
 {
@@ -56,12 +57,15 @@ trait ImageTrait
 
         $fileLocation = $file->storeAs($folderName, $filename, 'public');
 
-        // Image::make('storage_tenant/tenant_'.tenant('id').'/app/public/' . $fileLocation)
-        // ->resize(500, null, function($constraint) {
-        //     $constraint->aspectRatio();
-        // })
-        // ->crop(500, 500)
-        // ->save('storage_tenant/tenant_'.tenant('id').'/app/public/' . $fileLocation);
+        Image::make('storage/' . $fileLocation)
+        ->resize(400, null, function($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })
+        ->fit(400, 300, function ($constraint) {
+            $constraint->upsize();
+        }, 'center')
+        ->save('storage/' . $fileLocation);
 
         return $filename;
     }

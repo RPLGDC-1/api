@@ -118,7 +118,7 @@ var get_modal = function (content) {
 							font-family: Monaco, Fixed">' +
       content +
       '</textarea>\
-						<button class="btn btn-light btn-square">Update</button>\
+						<button class="btn btn-theme btn-light btn-square">Update</button>\
 					</div>\
 				</div>\
 			</div>\

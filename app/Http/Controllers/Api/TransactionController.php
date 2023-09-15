@@ -34,7 +34,9 @@ class TransactionController extends Controller
                 new WhereFilter('status'),
             ])
             ->thenReturn()
-            ->with('product');
+            ->with('product')
+            ->whereUserId(Auth::id())
+            ->latest();
 
         return $this->sendResponse(new PaginationCollection($model->paginate()));
     }
