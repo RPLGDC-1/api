@@ -64,8 +64,10 @@ jobs:
         env:
           OUTPUT_SHA: ${{ needs.build.outputs.output_sha}}
         run: |
-          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-$OUTPUT_SHA#" deployment.yaml  
+          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-$OUTPUT_SHA#" deployment.yaml
           cat deployment.yaml
+          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-$OUTPUT_SHA#" job.yaml
+          cat job.yaml
 
       - name: Check Working Tree
         run: git status
