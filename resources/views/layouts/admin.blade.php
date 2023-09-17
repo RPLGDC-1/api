@@ -388,7 +388,7 @@
                     >
                     <ul class="sidebar-submenu">
                       <li><a href="{{ route('products.index') }}">Products</a></li>
-                      <li><a href="chart-widget.html">Categories</a></li>
+                      <li><a href="{{ route('categories.index') }}">Categories</a></li>
                     </ul>
                   </li>
                   <li class="sidebar-list">
