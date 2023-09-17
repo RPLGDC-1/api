@@ -164,6 +164,7 @@
                         </g></svg>
                       <span class="">Dashboard</span>
                     </a>
+                  </li>
                   <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -180,6 +181,23 @@
                     <ul class="sidebar-submenu">
                       <li><a href="{{ route('products.index') }}">Products</a></li>
                       <li><a href="{{ route('categories.index') }}">Categories</a></li>
+                    </ul>
+                  </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <g>
+                            <path d="M14.3053 15.45H8.90527" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12.2604 11.4387H8.90442" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.1598 8.3L14.4898 2.9C13.7598 2.8 12.9398 2.75 12.0398 2.75C5.74978 2.75 3.64978 5.07 3.64978 12C3.64978 18.94 5.74978 21.25 12.0398 21.25C18.3398 21.25 20.4398 18.94 20.4398 12C20.4398 10.58 20.3498 9.35 20.1598 8.3Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M13.9342 2.83276V5.49376C13.9342 7.35176 15.4402 8.85676 17.2982 8.85676H20.2492" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </g></svg
+                      ><span> Transactions</span></a
+                    >
+                    <ul class="sidebar-submenu">
+                      <li><a href="{{ route('recent_orders.index') }}">Recent Orders</a></li>
                     </ul>
                   </li>
                   <li class="sidebar-list">
@@ -204,21 +222,19 @@
                     </ul>
                   </li>
                   <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                    <a class="sidebar-link sidebar-title link-nav" href="{{ route('customers.index') }}">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                           <g>
-                            <path d="M14.3053 15.45H8.90527" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M12.2604 11.4387H8.90442" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.1598 8.3L14.4898 2.9C13.7598 2.8 12.9398 2.75 12.0398 2.75C5.74978 2.75 3.64978 5.07 3.64978 12C3.64978 18.94 5.74978 21.25 12.0398 21.25C18.3398 21.25 20.4398 18.94 20.4398 12C20.4398 10.58 20.3498 9.35 20.1598 8.3Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M13.9342 2.83276V5.49376C13.9342 7.35176 15.4402 8.85676 17.2982 8.85676H20.2492" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M7.4831 10.261V16.9547" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12.0368 7.05737V16.9553" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M16.5158 13.7983V16.9552" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.30005 12.0369C2.30005 4.73479 4.73479 2.30005 12.0369 2.30005C19.339 2.30005 21.7737 4.73479 21.7737 12.0369C21.7737 19.339 19.339 21.7737 12.0369 21.7737C4.73479 21.7737 2.30005 19.339 2.30005 12.0369Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                           </g>
                         </g></svg
-                      ><span> Transactions</span></a
-                    >
-                    <ul class="sidebar-submenu">
-                      <li><a href="chart-apex.html">Recent Orders</a></li>
-                    </ul>
+                      >
+                      <span class="">Customer</span>
+                    </a>
                   </li>
                   <hr>
                   <li class="sidebar-list">
