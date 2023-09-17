@@ -69,8 +69,8 @@
                       <td>{{ $row->quantity }}</td>
                       <td>{{ date("d F Y", strtotime($row->created_at)) }}</td>
                       <td>
+                        <button class="btn btn-primary btn-xs" onclick="window.location.href=`{{ route('products.edit', $row->id) }}`" data-original-title="btn btn-danger btn-xs" title="">Edit</button>
                         <button class="btn btn-danger btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="" onclick="handleDelete({{ $row->id }})" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete</button>
-                        <button class="btn btn-primary btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="">Edit</button>
                       </td>
                     </tr>
                   @endforeach

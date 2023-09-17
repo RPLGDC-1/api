@@ -26,6 +26,12 @@ class ProductController extends Controller
         return view('admin.product.create', $data);
     }
 
+    public function edit(Product $product)
+    {
+        $data['categories'] = Category::get();
+        return view('admin.product.edit', $data, compact('product'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -54,6 +60,35 @@ class ProductController extends Controller
             'rating' => $faker->randomFloat(1, 1, 5), // Angka desimal acak antara 1 dan 5
             'sold' => 0,
         ]);
+
+        return redirect()->route('products.index')->with('success', 'Action successfully completed.');
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'stock' => 'required',
+            'price' => 'required',
+            'selling_price' => 'required',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $image = $this->uploadFileFromRequest('image', 'products');
+        
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->quantity = $request->stock;
+        $product->price = $request->price;
+        $product->selling_price = $request->selling_price;
+        $product->category_id = $request->category_id;
+
+        if($image) {
+            $product->image = $image;
+        }
+
+        $product->save();
 
         return redirect()->route('products.index')->with('success', 'Action successfully completed.');
     }
