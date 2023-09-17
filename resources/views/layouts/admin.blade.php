@@ -83,208 +83,8 @@
                   </svg>
                 </div>
               </li>
-              <li class="cart-nav onhover-dropdown">
-                <div class="cart-box">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <g>
-                        <path d="M5.52377 7C9.41427 5.74386 13.9724 5.45573 16 5.5C18.0276 5.54427 18.8831 6.2663 19.5 7.5C20.5 9.5 20.289 14.4881 18.5 16.0871C16.712 17.6861 9.33015 17.8381 6.87015 16.0871C4.27115 14.2361 5.629 9.192 5.544 5.743C5.595 3.813 3.5 3.5 3.5 3.5" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M13 10.5H15.773" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.26399 20.1274C7.56399 20.1274 7.80799 20.3714 7.80799 20.6714C7.80799 20.9724 7.56399 21.2164 7.26399 21.2164C6.96299 21.2164 6.71899 20.9724 6.71899 20.6714C6.71899 20.3714 6.96299 20.1274 7.26399 20.1274Z" fill="#130F26" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5954 20.1274C17.8964 20.1274 18.1404 20.3714 18.1404 20.6714C18.1404 20.9724 17.8964 21.2164 17.5954 21.2164C17.2954 21.2164 17.0514 20.9724 17.0514 20.6714C17.0514 20.3714 17.2954 20.1274 17.5954 20.1274Z" fill="#130F26" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </g>
-                    </g></svg
-                  ><span class="badge rounded-pill badge-primary">2</span>
-                </div>
-                <div class="cart-dropdown onhover-show-div">
-                  <div class="dropdown-title">
-                    <h3>Cart</h3>
-                    <a class="f-right" href="cart.html"> <i data-feather="shopping-bag"> </i></a>
-                  </div>
-                  <ul class="custom-scrollbar">
-                    <li>
-                      <div class="media">
-                        <img class="img-fluid b-r-5 me-3 img-50" src="{{ url('/images/banner-1.jpg') }}" alt="" />
-                        <div class="media-body">
-                          <h5><a href="product.html">Black shirt with jecket</a></h5>
-                          <p class="f-w-700">$500</p>
-                          <div class="cart-quantity">
-                            <span class="plus"><i class="fa fa-plus"></i></span> <input class="count" type="text" name="qty" value="3" /><span class="minus"><i class="fa fa-minus"></i></span>
-                          </div>
-                        </div>
-                        <div class="close-circle">
-                          <a href="dashboard-02.html#"><i class="me-1" data-feather="edit"></i></a><a href="dashboard-02.html#"><i data-feather="trash-2"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <img class="img-fluid b-r-5 me-3 img-50" src="{{ url('/images/product-4.png') }}" alt="" />
-                        <div class="media-body">
-                          <h5><a href="product.html">Yellow white shirt.</a></h5>
-                          <p class="f-w-700">$500</p>
-                          <div class="cart-quantity">
-                            <span class="plus"><i class="fa fa-plus"></i></span> <input class="count" type="text" name="qty" value="3" /><span class="minus"><i class="fa fa-minus"></i></span>
-                          </div>
-                        </div>
-                        <div class="close-circle">
-                          <a href="dashboard-02.html#"><i class="me-1" data-feather="edit"></i></a><a href="dashboard-02.html#"><i data-feather="trash-2"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <img class="img-fluid b-r-5 me-3 img-50" src="{{ url('/images/product-6.jpg') }}" alt="" />
-                        <div class="media-body">
-                          <h5><a href="product.html">Nike Black shoes !</a></h5>
-                          <p class="f-w-700">$500</p>
-                          <div class="cart-quantity">
-                            <span class="plus"><i class="fa fa-plus"></i></span> <input class="count" type="text" name="qty" value="3" /><span class="minus"><i class="fa fa-minus"></i></span>
-                          </div>
-                        </div>
-                        <div class="close-circle">
-                          <a href="dashboard-02.html#"><i class="me-1" data-feather="edit"></i></a><a href="dashboard-02.html#"><i data-feather="trash-2"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="order-total">
-                      <h4 class="mb-0 f-w-700">Total : <span>$100.00</span></h4>
-                      <a class="btn btn-primary view-checkout" href="checkout.html">Checkout</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li class="onhover-dropdown">
-                <div class="notification-box">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <g>
-                        <path d="M8.54248 9.21777H15.3975" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9702 2.5C5.58324 2.5 4.50424 3.432 4.50424 10.929C4.50424 19.322 4.34724 21.5 5.94324 21.5C7.53824 21.5 10.1432 17.816 11.9702 17.816C13.7972 17.816 16.4022 21.5 17.9972 21.5C19.5932 21.5 19.4362 19.322 19.4362 10.929C19.4362 3.432 18.3572 2.5 11.9702 2.5Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </g>
-                    </g>
-                  </svg>
-                </div>
-                <div class="onhover-show-div bookmark-flip">
-                  <div class="flip-card">
-                    <div class="flip-card-inner">
-                      <div class="front dropdown-title">
-                        <h3 class="mb-2">Bookmark</h3>
-                        <ul class="bookmark-dropdown pb-0">
-                          <li class="p-0">
-                            <div class="row">
-                              <div class="col-4 text-center">
-                                <div class="bookmark-content">
-                                  <div class="bookmark-icon"><i data-feather="file-text"></i></div>
-                                  <h5 class="mt-2"><a href="base-input.html">Forms</a></h5>
-                                </div>
-                              </div>
-                              <div class="col-4 text-center">
-                                <div class="bookmark-content">
-                                  <div class="bookmark-icon"><i data-feather="user"></i></div>
-                                  <h5 class="mt-2"><a href="user-profile.html">Profile</a></h5>
-                                </div>
-                              </div>
-                              <div class="col-4 text-center">
-                                <div class="bookmark-content">
-                                  <div class="bookmark-icon"><i data-feather="server"></i></div>
-                                  <h5 class="mt-2"><a href="datatable-basic-init.html">Tables</a></h5>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <li class="text-center"><a class="flip-btn btn btn-primary" id="flip-btn" href="javascript:void(0)">Add New Bookmark</a></li>
-                        </ul>
-                      </div>
-                      <div class="back dropdown-title">
-                        <ul>
-                          <li>
-                            <div class="bookmark-dropdown flip-back-content">
-                              <input type="text" placeholder="search..." />
-                            </div>
-                          </li>
-                          <li><a class="f-w-700 d-block flip-back" id="flip-back" href="javascript:void(0)">Back</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="onhover-dropdown">
-                <div class="notification-box">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g>
-                      <g>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9961 2.51416C7.56185 2.51416 5.63519 6.5294 5.63519 9.18368C5.63519 11.1675 5.92281 10.5837 4.82471 13.0037C3.48376 16.4523 8.87614 17.8618 11.9961 17.8618C15.1152 17.8618 20.5076 16.4523 19.1676 13.0037C18.0695 10.5837 18.3571 11.1675 18.3571 9.18368C18.3571 6.5294 16.4295 2.51416 11.9961 2.51416Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M14.306 20.5122C13.0117 21.9579 10.9927 21.9751 9.68604 20.5122" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </g>
-                    </g></svg
-                  ><span class="badge rounded-pill badge-warning">4 </span>
-                </div>
-                <div class="onhover-show-div notification-dropdown">
-                  <div class="dropdown-title">
-                    <h3>Notification</h3>
-                    <a class="f-right" href="cart.html"> <i data-feather="bell"> </i></a>
-                  </div>
-                  <ul class="custom-scrollbar">
-                    <li>
-                      <div class="media">
-                        <div class="notification-img bg-light-primary"><img src="{{ url('/images/avtar/man.png') }}" alt="" /></div>
-                        <div class="media-body">
-                          <h5><a class="f-14 m-0" href="user-profile.html">Allie Grater</a></h5>
-                          <p>Lorem ipsum dolor sit amet...</p>
-                          <span>10:20</span>
-                        </div>
-                        <div class="notification-right">
-                          <a href="dashboard-02.html#"><i data-feather="x"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <div class="notification-img bg-light-secondary"><img src="{{ url('/images/avtar/teacher.png') }}" alt="" /></div>
-                        <div class="media-body">
-                          <h5><a class="f-14 m-0" href="user-profile.html">Olive Yew</a></h5>
-                          <p>Lorem ipsum dolor sit amet...</p>
-                          <span>09:20</span>
-                        </div>
-                        <div class="notification-right">
-                          <a href="dashboard-02.html#"><i data-feather="x"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <div class="notification-img bg-light-info"><img src="{{ url('/images/avtar/teenager.png') }}" alt="" /></div>
-                        <div class="media-body">
-                          <h5><a class="f-14 m-0" href="user-profile.html">Peg Legge</a></h5>
-                          <p>Lorem ipsum dolor sit amet...</p>
-                          <span>07:20</span>
-                        </div>
-                        <div class="notification-right">
-                          <a href="dashboard-02.html#"><i data-feather="x"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <div class="notification-img bg-light-success"><img src="{{ url('/images/avtar/chinese.png') }}" alt="" /></div>
-                        <div class="media-body">
-                          <h5><a class="f-14 m-0" href="user-profile.html">Teri Dactyl</a></h5>
-                          <p>Lorem ipsum dolor sit amet...</p>
-                          <span>05:20</span>
-                        </div>
-                        <div class="notification-right">
-                          <a href="dashboard-02.html#"><i data-feather="x"></i></a>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="p-0"><a class="btn btn-primary" href="dashboard-02.html#">Check all</a></li>
-                  </ul>
-                </div>
-              </li>
               <li class="maximize">
-                <a class="text-dark" href="dashboard-02.html#!" onclick="javascript:toggleFullScreen()">
+                <a class="text-dark" href="#" onclick="javascript:toggleFullScreen(); javascript:void(0)">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g>
                       <g>
@@ -314,16 +114,7 @@
                     <a href="user-profile.html"><i data-feather="user"></i><span>Account </span></a>
                   </li>
                   <li>
-                    <a href="email-application.html"><i data-feather="mail"></i><span>Inbox</span></a>
-                  </li>
-                  <li>
-                    <a href="kanban.html"><i data-feather="file-text"></i><span>Taskboard</span></a>
-                  </li>
-                  <li>
-                    <a href="edit-profile.html"><i data-feather="settings"></i><span>Settings</span></a>
-                  </li>
-                  <li>
-                    <a href="login.html"><i data-feather="log-in"> </i><span>Log in</span></a>
+                    <a href="login.html"><i data-feather="log-out"> </i><span>Log out</span></a>
                   </li>
                 </ul>
               </li>
@@ -384,13 +175,52 @@
                             <path d="M9.19557 13.8999H9.20457" stroke="#130F26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                           </g>
                         </g></svg
-                      ><span>Product</span></a
+                      ><span> Product</span></a
                     >
                     <ul class="sidebar-submenu">
                       <li><a href="{{ route('products.index') }}">Products</a></li>
                       <li><a href="{{ route('categories.index') }}">Categories</a></li>
                     </ul>
                   </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <g>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9724 20.3683C8.73343 20.3683 5.96643 19.8783 5.96643 17.9163C5.96643 15.9543 8.71543 14.2463 11.9724 14.2463C15.2114 14.2463 17.9784 15.9383 17.9784 17.8993C17.9784 19.8603 15.2294 20.3683 11.9724 20.3683Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9725 11.4488C14.0985 11.4488 15.8225 9.72576 15.8225 7.59976C15.8225 5.47376 14.0985 3.74976 11.9725 3.74976C9.84645 3.74976 8.12245 5.47376 8.12245 7.59976C8.11645 9.71776 9.82645 11.4418 11.9455 11.4488H11.9725Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M18.3622 10.3915C19.5992 10.0605 20.5112 8.93254 20.5112 7.58954C20.5112 6.18854 19.5182 5.01854 18.1962 4.74854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M18.9431 13.5444C20.6971 13.5444 22.1951 14.7334 22.1951 15.7954C22.1951 16.4204 21.6781 17.1014 20.8941 17.2854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M5.58372 10.3915C4.34572 10.0605 3.43372 8.93254 3.43372 7.58954C3.43372 6.18854 4.42772 5.01854 5.74872 4.74854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M5.00176 13.5444C3.24776 13.5444 1.74976 14.7334 1.74976 15.7954C1.74976 16.4204 2.26676 17.1014 3.05176 17.2854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </g></svg
+                      ><span> Users</span></a
+                    >
+                    <ul class="sidebar-submenu">
+                      <li><a href="{{ route('admins.index') }}">Users Admin</a></li>
+                      <li><a href="{{ route('roles.index') }}">Role Management</a></li>
+                      <li><a href="user-cards.html">Permissions</a></li>
+                    </ul>
+                  </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <g>
+                            <path d="M14.3053 15.45H8.90527" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12.2604 11.4387H8.90442" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.1598 8.3L14.4898 2.9C13.7598 2.8 12.9398 2.75 12.0398 2.75C5.74978 2.75 3.64978 5.07 3.64978 12C3.64978 18.94 5.74978 21.25 12.0398 21.25C18.3398 21.25 20.4398 18.94 20.4398 12C20.4398 10.58 20.3498 9.35 20.1598 8.3Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M13.9342 2.83276V5.49376C13.9342 7.35176 15.4402 8.85676 17.2982 8.85676H20.2492" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </g></svg
+                      ><span> Transactions</span></a
+                    >
+                    <ul class="sidebar-submenu">
+                      <li><a href="chart-apex.html">Recent Orders</a></li>
+                    </ul>
+                  </li>
+                  <hr>
                   <li class="sidebar-list">
                     <a class="sidebar-link sidebar-title" href="dashboard-02.html#">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -515,27 +345,6 @@
                     <ul class="sidebar-submenu">
                       <li><a href="chat.html">Chat App</a></li>
                       <li><a href="chat-video.html">Video chat</a></li>
-                    </ul>
-                  </li>
-                  <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="dashboard-02.html#">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                          <g>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9724 20.3683C8.73343 20.3683 5.96643 19.8783 5.96643 17.9163C5.96643 15.9543 8.71543 14.2463 11.9724 14.2463C15.2114 14.2463 17.9784 15.9383 17.9784 17.8993C17.9784 19.8603 15.2294 20.3683 11.9724 20.3683Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9725 11.4488C14.0985 11.4488 15.8225 9.72576 15.8225 7.59976C15.8225 5.47376 14.0985 3.74976 11.9725 3.74976C9.84645 3.74976 8.12245 5.47376 8.12245 7.59976C8.11645 9.71776 9.82645 11.4418 11.9455 11.4488H11.9725Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M18.3622 10.3915C19.5992 10.0605 20.5112 8.93254 20.5112 7.58954C20.5112 6.18854 19.5182 5.01854 18.1962 4.74854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M18.9431 13.5444C20.6971 13.5444 22.1951 14.7334 22.1951 15.7954C22.1951 16.4204 21.6781 17.1014 20.8941 17.2854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M5.58372 10.3915C4.34572 10.0605 3.43372 8.93254 3.43372 7.58954C3.43372 6.18854 4.42772 5.01854 5.74872 4.74854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M5.00176 13.5444C3.24776 13.5444 1.74976 14.7334 1.74976 15.7954C1.74976 16.4204 2.26676 17.1014 3.05176 17.2854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </g>
-                        </g></svg
-                      ><span>Users</span></a
-                    >
-                    <ul class="sidebar-submenu">
-                      <li><a href="user-profile.html">Users Profile</a></li>
-                      <li><a href="edit-profile.html">Users Edit</a></li>
-                      <li><a href="user-cards.html">Users Cards</a></li>
                     </ul>
                   </li>
                   <li class="sidebar-list">
@@ -1236,7 +1045,7 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-12 footer-copyright text-center">
-                <p class="mb-0">Copyright 2022 © Zeta theme by pixelstrap</p>
+                <p class="mb-0">Copyright {{ date('Y') }} © DuniaBelanja</p>
               </div>
             </div>
           </div>
