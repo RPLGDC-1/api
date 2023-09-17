@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductPopularController;
 use App\Http\Controllers\RecentOrderController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -34,4 +35,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/customers', CustomerController::class);
     Route::resource('/roles', RoleController::class);
     Route::get('/order/recents', [RecentOrderController::class, 'index'])->name('recent_orders.index');
+    Route::get('/product/populars', [ProductPopularController::class, 'index'])->name('product_populars.index');
 });

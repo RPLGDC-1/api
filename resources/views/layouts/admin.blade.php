@@ -198,10 +198,11 @@
                     >
                     <ul class="sidebar-submenu">
                       <li><a href="{{ route('recent_orders.index') }}">Recent Orders</a></li>
+                      <li><a href="{{ route('product_populars.index') }}">Produk Terpopuler</a></li>
                     </ul>
                   </li>
                   <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                    <a class="sidebar-link sidebar-title link-nav" href="{{ route('customers.index') }}">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g>
                           <g>
@@ -213,28 +214,28 @@
                             <path d="M5.00176 13.5444C3.24776 13.5444 1.74976 14.7334 1.74976 15.7954C1.74976 16.4204 2.26676 17.1014 3.05176 17.2854" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                           </g>
                         </g></svg
-                      ><span> Users</span></a
+                      >
+                      <span class="">Customer</span>
+                    </a>
+                  </li>
+                  <li class="sidebar-list">
+                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <g>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.92234 21.8083C6.10834 21.8083 2.85034 21.2313 2.85034 18.9213C2.85034 16.6113 6.08734 14.5103 9.92234 14.5103C13.7363 14.5103 16.9943 16.5913 16.9943 18.9003C16.9943 21.2093 13.7573 21.8083 9.92234 21.8083Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.92231 11.2159C12.4253 11.2159 14.4553 9.1859 14.4553 6.6829C14.4553 4.1789 12.4253 2.1499 9.92231 2.1499C7.41931 2.1499 5.38931 4.1789 5.38931 6.6829C5.38031 9.1769 7.39631 11.2069 9.89031 11.2159H9.92231Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M19.1313 8.12891V12.1389" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M21.1776 10.1338H17.0876" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </g>
+                        </g></svg
+                      ><span> Admin</span></a
                     >
                     <ul class="sidebar-submenu">
                       <li><a href="{{ route('admins.index') }}">Users Admin</a></li>
                       <li><a href="{{ route('roles.index') }}">Role Management</a></li>
                       <li><a href="user-cards.html">Permissions</a></li>
                     </ul>
-                  </li>
-                  <li class="sidebar-list">
-                    <a class="sidebar-link sidebar-title link-nav" href="{{ route('customers.index') }}">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                          <g>
-                            <path d="M7.4831 10.261V16.9547" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M12.0368 7.05737V16.9553" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M16.5158 13.7983V16.9552" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.30005 12.0369C2.30005 4.73479 4.73479 2.30005 12.0369 2.30005C19.339 2.30005 21.7737 4.73479 21.7737 12.0369C21.7737 19.339 19.339 21.7737 12.0369 21.7737C4.73479 21.7737 2.30005 19.339 2.30005 12.0369Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                          </g>
-                        </g></svg
-                      >
-                      <span class="">Customer</span>
-                    </a>
                   </li>
                   <hr>
                   <li class="sidebar-list">

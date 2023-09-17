@@ -20,7 +20,7 @@
     <div class="page-title">
       <div class="d-flex justify-content-between">
         <div class="">
-          <h3>Customers</h3>
+          <h3>Recent orders</h3>
         </div>
       </div>
     </div>
@@ -32,32 +32,36 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header pb-0">
-            <h5>Customers </h5>
-            <span>Welcome to the Customers List Page. Here, as an administrator, you have full control to manage the available products. You can easily perform various actions such as editing, deleting, or adding new products as per your requirements. Please use the provided menu and tools to efficiently manage your product catalog.</span>
+            <h5>Recent orders </h5>
+            <span>Welcome to the Recent orders List Page. Here, as an administrator, you have full control to manage the available products. You can easily perform various actions such as editing, deleting, or adding new products as per your requirements. Please use the provided menu and tools to efficiently manage your product catalog.</span>
           </div>
           <div class="card-body">
             <div class="table-responsive product-table">
               <table class="display" id="basic-1">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Created At</th>
-                    <th>Action</th>
+                    <th>Image</th>
+                    <th>Details</th>
+                    <th>Customer</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Start date</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($customers as $row)
+                  @foreach ($recent_orders as $row)
                     <tr>
-                      <td class="text-start">{{ $row->name }}</td>
-                      <td class="text-start">{{ $row->email }}</td>
+                      <td><a href="javascript:void(0)"><img class="rounded" src="{{ $row->product->image }}" alt=""></a></td>
+                      <td><a href="javascript:void(0)">
+                          <h6> {{ $row->product->name }} </h6></a><span>{{ $row->product->description }}</span></td>
+                      <td><a href="javascript:void(0)">
+                          <h6> {{ $row->user->name }} </h6></a><span>{{ $row->user->description }}</span></td>
+                      <td>Rp. {{ number_format($row->subtotal) }}</td>
+                      <td>{{ $row->quantity }}</td>
                       <td>{{ date("d F Y", strtotime($row->created_at)) }}</td>
-                      <td>
-                        <button class="btn btn-primary btn-xs" onclick="window.location.href=`{{ route('admins.edit', $row->id) }}`">Edit</button>
-                        @if ($row->id != auth()->user()->id)
-                          <button class="btn btn-danger btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="" onclick="handleDelete({{ $row->id }})" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete</button>
-                        @endif
-                      </td>
+                      <td>{{ $row->status }}</td>
+                      
                     </tr>
                   @endforeach
                 </tbody>
