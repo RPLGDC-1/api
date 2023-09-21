@@ -21,6 +21,195 @@
   <script src="{{ url('/js/owlcarousel/owl-custom.js') }}"></script>
   <script src="{{ url('/js/dashboard/dashboard_2.js') }}"></script>
   <script src="{{ url('/js/tooltip-init.js') }}"></script>
+  <script>
+      $.ajax({
+        url: `{{ url('dashboard/revenue') }}`,
+        success: function(data) {
+          var options = {
+          labels: data.map(r => r.status),
+          series: data.map(r => r.total),
+          chart: {
+            type: 'donut',
+            height: 320 ,
+          },
+          legend:{
+            position:'bottom'
+          },
+          dataLabels: {
+            enabled: false,
+          },      
+          states: {          
+            hover: {
+              filter: {
+                type: 'darken',
+                value: 1,
+              }
+            }           
+          },
+          stroke: {
+            width: 0,
+          },
+          responsive: [
+                {
+                  breakpoint: 1661,
+                  options: {
+                    chart: {
+                        height:310,
+                    }
+                  }
+                },            
+                {
+                  breakpoint: 481,
+                  options:{
+                    chart:{
+                        height:280,
+                    }
+                  }
+                }
+
+            ],     
+          colors:[zetaAdminConfig.primary,zetaAdminConfig.secondary,zetaAdminConfig.success,zetaAdminConfig.info,zetaAdminConfig.warning],
+        };
+          var chart = new ApexCharts(document.querySelector("#revenue-chart"), options);
+          chart.render();
+        }
+      });
+
+      
+  </script>
+  <script>
+
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      
+      function formatNumberWithCommas(originalNumber) {
+      // Mengubah integer menjadi string
+      const numberString = originalNumber.toString();
+
+      // Menggunakan regex untuk menambahkan titik sebagai pemisah ribuan
+      return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+  
+    $.ajax({
+      url: `{{ url('dashboard/invoice') }}`,
+      success: function(data) {
+        var options = {
+        series: [{
+          name: 'Price Income',   
+          data: data.map(r => r.price)
+        }, {
+          name: 'Subtotal Income',   
+          data: data.map(r => r.subtotal)
+        }],
+        chart: {
+          type: 'bar',
+          height: 263,
+          toolbar: {
+            show: false,
+          },
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '20%',
+            endingShape: 'rounded'
+          },
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false,
+        },
+        colors: [zetaAdminConfig.primary, zetaAdminConfig.secondary],
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ['transparent']
+        },
+        states: {          
+            hover: {
+              filter: {
+                type: 'darken',
+                value: 1,
+              }
+            }           
+          },
+        xaxis: {
+          categories: data.map(r => months[r.month]),
+          labels: {
+            offsetX:  0,
+            offsetY: -6,
+            style: {
+              colors: "#8E97B2",
+              fontWeight: 400,
+              fontSize: '10px',
+              fontFamily: 'roboto'
+            },
+          },
+          axisBorder: {
+            show: false,
+
+          },
+          axisTicks: {
+            show: false,
+          },
+        },
+        yaxis: {   
+          labels:{
+            offsetX: 14,
+            offsetY: -5   
+          },
+          tooltip: {
+            enabled: true
+          },
+          labels: {
+            formatter: function (value) {
+              return "Rp " + formatNumberWithCommas(value);
+            },
+          },
+        },
+        fill: {
+          opacity: 1
+        }, 
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return "$ " + val + " thousands"
+            }
+          }
+        },
+        states: {          
+            hover: {
+              filter: {
+                type: 'darken',
+                value: 1,
+              }
+            }           
+        },
+      };
+
+      var chart = new ApexCharts(document.querySelector("#invoice-overviwe-chart"), options);
+      chart.render();
+      }
+    });
+
+      
+  </script>
+
 @endsection
 
 @section('content')
@@ -47,7 +236,6 @@
                     <div class="media-body"> 
                       <h5 class="mb-0 text-light">Sales Stats</h5>
                     </div>
-                    <div class="icon-box"><i data-feather="more-horizontal"></i></div>
                   </div>
                 </div>
                 <div class="card-body p-0">
@@ -59,7 +247,7 @@
               <div class="sales-small-chart">
                 <div class="card-body p-0 m-auto">
                   <div class="sales-small sales-small-1"></div>
-                  <h6>300</h6><span>Watch Sale  </span>
+                  <h6>{{ $total_customers }}</h6><span>Customers  </span>
                 </div>
               </div>
             </div>
@@ -67,7 +255,7 @@
               <div class="sales-small-chart">
                 <div class="card-body p-0 m-auto">
                   <div class="sales-small sales-small-2"></div>
-                  <h6>1120</h6><span>Phone Sale</span>
+                  <h6>{{ $total_products }}</h6><span>Products  </span>
                 </div>
               </div>
             </div>
@@ -75,7 +263,7 @@
               <div class="sales-small-chart">
                 <div class="card-body p-0 m-auto">
                   <div class="sales-small sales-small-3"></div>
-                  <h6>530</h6><span>Tablet Sale </span>
+                  <h6>{{ $total_admins }}</h6><span>Admins  </span>
                 </div>
               </div>
             </div>
@@ -87,18 +275,6 @@
           <div class="card-header card-no-border">
             <div class="header-top">
               <h5 class="m-0">Invoice Overview</h5>
-              <div class="icon-box onhover-dropdown"><i data-feather="more-horizontal"></i>
-                <div class="icon-box-show onhover-show-div">
-                  <ul> 
-                    <li> <a>
-                        Today</a></li>
-                    <li> <a>
-                        Yesterday</a></li>
-                    <li> <a>
-                        Tommorow</a></li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
           <div class="card-body pt-0">
@@ -136,7 +312,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-5 col-md-12 dash-xl-50 dash-lg-100 dash-39">
+      <div class="col-xl">
         <div class="card ongoing-project recent-orders">
           <div class="card-header card-no-border">
             <div class="media media-dashboard">
@@ -197,106 +373,19 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-md-6 dash-xl-50 dash-29">
-        <div class="card our-activities">
-          <div class="card-header card-no-border">
-            <div class="media media-dashboard">
-              <div class="media-body"> 
-                <h5 class="mb-0">Our Activities      </h5>
-              </div>
-              <div class="icon-box onhover-dropdown"><i data-feather="more-horizontal"></i>
-                <div class="icon-box-show onhover-show-div">
-                  <ul> 
-                    <li> <a>
-                        Latest </a></li>
-                    <li> <a>
-                        Earlist</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body pt-0">
-            <div class="table-responsive">
-              <table class="table table-bordernone">                          
-                <tbody> 
-                  <tr>
-                    <td>
-                      <div class="media">
-                        <div class="icon-wrappar"><i class="fa fa-trophy font-primary">                                    </i></div>
-                        <div class="media-body"><a href="dashboard-02.html#">
-                            <h5>Win best seller of the year awaed </h5></a>
-                          <p>Company, San Francisco</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="badge badge-light-theme-light font-theme-light">1 day ago</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="media">
-                        <div class="icon-wrappar"><i class="fa fa-check-circle font-secondary">                                   </i></div>
-                        <div class="media-body"><a href="dashboard-02.html#">
-                            <h5>Apporved our product</h5></a>
-                          <p>Elisse joson, San Francisco</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="badge badge-light-theme-light font-theme-light">2 weeks ago</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="media">
-                        <div class="icon-wrappar"><i class="fa fa-bookmark font-success">                                    </i></div>
-                        <div class="media-body"><a href="dashboard-02.html#">
-                            <h5>Win best seller of the year awaed </h5></a>
-                          <p>Company, San Francisco</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="badge badge-light-theme-light font-theme-light">3 day ago</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="media">
-                        <div class="icon-wrappar"><i class="fa fa-shopping-basket font-warning">                                     </i></div>
-                        <div class="media-body"><a href="dashboard-02.html#">
-                            <h5>Apporved our product in checking</h5></a>
-                          <p>35k Sales</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="badge badge-light-theme-light font-theme-light">2 hours ago</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="col-xl-3 col-md-6 dash-xl-50 dash-32">
         <div class="card revenue-category">
           <div class="card-header card-no-border">
             <div class="media">
               <div class="media-body"> 
-                <h5 class="mb-0">Revenue by Category</h5>
-              </div>
-              <div class="icon-box onhover-dropdown"><i data-feather="more-horizontal"></i>
-                <div class="icon-box-show onhover-show-div">
-                  <ul> 
-                    <li> <a>
-                        Done</a></li>
-                    <li> <a>
-                        Pending</a></li>
-                  </ul>
-                </div>
+                <h5 class="mb-0">Revenue by Status</h5>
               </div>
             </div>
           </div>
           <div class="card-body">
             <div class="donut-inner">
-              <h5>16,349</h5>
-              <h6>2,174 in pending</h6>
+              <h5>{{ number_format($total_transactions) }}</h5>
+              <h6>{{ number_format($total_transaction_pendings) }} in pending</h6>
             </div>
             <div id="revenue-chart">            </div>
           </div>

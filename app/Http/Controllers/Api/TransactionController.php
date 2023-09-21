@@ -17,7 +17,8 @@ class TransactionController extends Controller
 {
     use ApiTrait;
 
-    public function __construct() {
+    public function __construct()
+    {
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         \Midtrans\Config::$isProduction = env('MIDTRANS_PRODUCTION');
         \Midtrans\Config::$isSanitized = true;
@@ -68,7 +69,7 @@ class TransactionController extends Controller
         ]);
 
         DB::beginTransaction();
-        
+
         try {
 
             $product = Product::find($request->product_id);
@@ -81,13 +82,13 @@ class TransactionController extends Controller
                 'address' => $request->address,
                 'status' => 'pending',
                 'user_id' => Auth::id(),
-                
+
                 // Pricing
                 'price' => ($product->selling_price * $request->quantity),
                 'subtotal' => ($product->selling_price * $request->quantity) + Transaction::SHIPPING_PRICE,
                 'shipping_price' => Transaction::SHIPPING_PRICE,
             ]);
-            
+
             $params = array(
                 'enable_payments' => [
                     'credit_card', 'mandiri_clickpay', 'cimb_clicks',
@@ -119,7 +120,7 @@ class TransactionController extends Controller
             $transaction->save();
 
             DB::commit();
-            
+
             return $this->sendResponse([
                 'message' => 'Transaction checkout successfully.',
                 'payment_url' => $snap->redirect_url,
@@ -129,7 +130,8 @@ class TransactionController extends Controller
         }
     }
 
-    public function callback(Request $request) {
+    public function callback(Request $request)
+    {
         // $notif = new \Midtrans\Notification();
 
         // $transaction = $notif->transaction_status;
@@ -159,5 +161,4 @@ class TransactionController extends Controller
         //     // TODO Set payment status in merchant's database to 'failure'
         // }
     }
-
 }

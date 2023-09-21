@@ -56,7 +56,6 @@
                     <th>Price</th>
                     <th>Sold</th>
                     <th>Start date</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,10 +67,6 @@
                       <td>Rp. {{ number_format($row->selling_price) }}</td>
                       <td>{{ $row->sold }}</td>
                       <td>{{ date("d F Y", strtotime($row->created_at)) }}</td>
-                      <td>
-                        <button class="btn btn-primary btn-xs" onclick="window.location.href=`{{ route('products.edit', $row->id) }}`" data-original-title="btn btn-danger btn-xs" title="">Edit</button>
-                        <button class="btn btn-danger btn-xs" type="button" data-original-title="btn btn-danger btn-xs" title="" onclick="handleDelete({{ $row->id }})" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete</button>
-                      </td>
                     </tr>
                   @endforeach
                 </tbody>

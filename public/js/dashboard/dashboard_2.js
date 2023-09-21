@@ -193,104 +193,7 @@ new Chartist.Bar('.sales-small-2', {
 
 
 // invoice-overviwe-chart start
-var options = {
-  series: [{
-    name: 'Revenue',   
-    data: [19, 28, 31, 25, 35, 18, 23]
-  }, {
-    name: 'Free Cash Flow',   
-    data: [25, 31, 35, 29, 39, 22, 28]
-  }],
-  chart: {
-    type: 'bar',
-    height: 263,
-    toolbar: {
-      show: false,
-    },
-  },
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: '20%',
-      endingShape: 'rounded'
-    },
-  },
-  dataLabels: {
-    enabled: false
-  },
-  legend: {
-    show: false,
-  },
-  colors: [zetaAdminConfig.primary, zetaAdminConfig.secondary],
-  stroke: {
-    show: true,
-    width: 1,
-    colors: ['transparent']
-  },
-  states: {          
-      hover: {
-        filter: {
-          type: 'darken',
-          value: 1,
-        }
-      }           
-    },
-  xaxis: {
-    categories: [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    labels: {
-      offsetX:  0,
-      offsetY: -6,
-      style: {
-        colors: "#8E97B2",
-        fontWeight: 400,
-        fontSize: '10px',
-        fontFamily: 'roboto'
-      },
-    },
-    axisBorder: {
-      show: false,
 
-    },
-    axisTicks: {
-      show: false,
-    },
-  },
-  yaxis: {   
-    labels:{
-      offsetX: 14,
-      offsetY: -5   
-    },
-    tooltip: {
-      enabled: true
-    },
-    labels: {
-      formatter: function (value) {
-        return value + "k";
-      },
-    },
-  },
-  fill: {
-    opacity: 1
-  }, 
-  tooltip: {
-    y: {
-      formatter: function (val) {
-        return "$ " + val + " thousands"
-      }
-    }
-  },
-  states: {          
-      hover: {
-        filter: {
-          type: 'darken',
-          value: 1,
-        }
-      }           
-  },
-};
-
-var chart = new ApexCharts(document.querySelector("#invoice-overviwe-chart"), options);
-chart.render();
 
 // invoice overviwe chart end
 
@@ -393,53 +296,7 @@ chart.render();
 
 
 // revenue chart start
-  var options = {
-      labels: ['Men', 'Women', 'Accessories','Children','Apperal'],
-      series: [44, 55, 41, 17, 15],
-      chart: {
-        type: 'donut',
-        height: 320 ,
-      },
-      legend:{
-        position:'bottom'
-      },
-      dataLabels: {
-        enabled: false,
-      },      
-      states: {          
-        hover: {
-          filter: {
-            type: 'darken',
-            value: 1,
-          }
-        }           
-      },
-      stroke: {
-        width: 0,
-      },
-      responsive: [
-            {
-              breakpoint: 1661,
-              options: {
-                chart: {
-                    height:310,
-                }
-              }
-            },            
-            {
-              breakpoint: 481,
-              options:{
-                chart:{
-                    height:280,
-                }
-              }
-            }
 
-        ],     
-      colors:[zetaAdminConfig.primary,zetaAdminConfig.secondary,zetaAdminConfig.success,zetaAdminConfig.info,zetaAdminConfig.warning],
-  };
-  var chart = new ApexCharts(document.querySelector("#revenue-chart"), options);
-  chart.render();
 // revenue chart end
 
 
