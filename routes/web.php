@@ -5,11 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPopularController;
 use App\Http\Controllers\RecentOrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,10 +38,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/categories', CategoryController::class);
     Route::resource('/admins', AdminController::class);
     Route::resource('/customers', CustomerController::class);
+    Route::resource('/permissions', PermissionController::class);
     Route::resource('/roles', RoleController::class);
     Route::get('/order/recents', [RecentOrderController::class, 'index'])->name('recent_orders.index');
     Route::get('/product/populars', [ProductPopularController::class, 'index'])->name('product_populars.index');
     Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('/sales/{transaction}', [SalesController::class, 'show'])->name('sales.show');
     Route::post('/sales/{transaction}', [SalesController::class, 'process']);
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::delete('/settings/product', [SettingController::class, 'product'])->name('settings.product');
+    Route::delete('/settings/transaction', [SettingController::class, 'transaction'])->name('settings.transaction');
 });
