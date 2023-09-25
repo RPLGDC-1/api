@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Traits\ImageTrait;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -52,7 +53,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'image' => $image,
             'description' => $request->description,
-            'image' => $request->image,
+            'image' => $image,
             'quantity' => $request->stock,
             'price' => $request->price,
             'selling_price' => $request->selling_price,
@@ -76,7 +77,7 @@ class ProductController extends Controller
         ]);
 
         $image = $this->uploadFileFromRequest('image', 'products');
-        
+
         $product->name = $request->name;
         $product->description = $request->description;
         $product->quantity = $request->stock;
@@ -84,7 +85,7 @@ class ProductController extends Controller
         $product->selling_price = $request->selling_price;
         $product->category_id = $request->category_id;
 
-        if($image) {
+        if ($image) {
             $product->image = $image;
         }
 
@@ -98,7 +99,7 @@ class ProductController extends Controller
         try {
             $product->delete();
             return back()->with('success', 'Action successfully completed.');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return back()->with('error', "Somethin went wrong with code {$e->getCode()}");
         }
     }

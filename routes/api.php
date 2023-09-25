@@ -26,7 +26,7 @@ Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::post('/transaction/callback', [TransactionController::class, 'callback']);
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum')->group(function () {
   Route::get('/profile', [AccountController::class, 'profile']);
   Route::post('/checkout', [TransactionController::class, 'checkout']);
   Route::get('/checkout', [TransactionController::class, 'checkoutData']);

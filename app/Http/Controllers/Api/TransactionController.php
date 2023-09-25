@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PaginationCollection;
+use App\Models\PaymentLog;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Pipelines\WhereFilter;
@@ -89,6 +90,9 @@ class TransactionController extends Controller
                 'shipping_price' => Transaction::SHIPPING_PRICE,
             ]);
 
+            $transaction->invoice_number = $transaction->invoice_number . '.' . $transaction->id;
+            $transaction->save();
+
             $params = array(
                 'enable_payments' => [
                     'credit_card', 'mandiri_clickpay', 'cimb_clicks',
@@ -132,33 +136,48 @@ class TransactionController extends Controller
 
     public function callback(Request $request)
     {
-        // $notif = new \Midtrans\Notification();
+        $transactionId =  @explode('.', $request->order_id)[1];
+        if (!$transactionId) {
+            return 'Transaction Not Found.';
+        }
 
-        // $transaction = $notif->transaction_status;
-        // $fraud = $notif->fraud_status;
+        PaymentLog::create([
+            'url' => $request->url(),
+            'method' => $request->method(),
+            'headers' => json_encode($request->header()),
+            'body' => json_encode($request->all()),
+            'transaction_id' => $transactionId,
+        ]);
 
-        // error_log("Order ID $notif->order_id: "."transaction status = $transaction, fraud staus = $fraud");
+        $notif = new \Midtrans\Notification();
+
+        $transaction = $notif->transaction_status;
+        $fraud = $notif->fraud_status;
 
 
+        $transaction = Transaction::find($transactionId);
 
-        // if ($transaction == 'capture') {
-        //     if ($fraud == 'challenge') {
-        //     // TODO Set payment status in merchant's database to 'challenge'
-        //     }
-        //     else if ($fraud == 'accept') {
-        //     // TODO Set payment status in merchant's database to 'success'
-        //     }
-        // }
-        // else if ($transaction == 'cancel') {
-        //     if ($fraud == 'challenge') {
-        //     // TODO Set payment status in merchant's database to 'failure'
-        //     }
-        //     else if ($fraud == 'accept') {
-        //     // TODO Set payment status in merchant's database to 'failure'
-        //     }
-        // }
-        // else if ($transaction == 'deny') {
-        //     // TODO Set payment status in merchant's database to 'failure'
-        // }
+        if ($transaction == 'capture') {
+            if ($fraud == 'challenge') {
+                // TODO Set payment status in merchant's database to 'challenge'
+                $transaction->status = 'expired';
+            } else if ($fraud == 'accept') {
+                $transaction->status = 'paid';
+            }
+        } else if ($transaction == 'cancel') {
+            if ($fraud == 'challenge') {
+                // TODO Set payment status in merchant's database to 'failure'
+                $transaction->status = 'cancel';
+            } else if ($fraud == 'accept') {
+                // TODO Set payment status in merchant's database to 'failure'
+                $transaction->status = 'cancel';
+            }
+        } else if ($transaction == 'deny') {
+            $transaction->status = 'cancel';
+        } else if ($transaction == 'settlement') {
+            $transaction->status = 'paid';
+        }
+
+        $transaction->save();
     }
 }
