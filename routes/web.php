@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaymentLogController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPopularController;
@@ -46,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/sales/{transaction}', [SalesController::class, 'show'])->name('sales.show');
     Route::post('/sales/{transaction}', [SalesController::class, 'process']);
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::get('/paymentlogs', [PaymentLogController::class, 'index'])->name('paymentlogs.index');
     Route::delete('/settings/product', [SettingController::class, 'product'])->name('settings.product');
     Route::delete('/settings/transaction', [SettingController::class, 'transaction'])->name('settings.transaction');
 });

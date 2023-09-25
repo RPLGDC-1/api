@@ -86,6 +86,7 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
 
         if ($image) {
+            Storage::disk('public')->delete('products/' . $product->rawImage);
             $product->image = $image;
         }
 
