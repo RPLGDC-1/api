@@ -12,9 +12,19 @@ class User extends Authenticatable
 {
     use HasApiTokens;
 
-    public CONST ROLE_ADMIN = 'admin';
-    public CONST ROLE_CUSTOMER = 'user';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_CUSTOMER = 'user';
 
     protected $guarded = [];
     protected $hidden = ['password', 'remember_token'];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->role->permissions()->where('name', $permission)->first() ?: false;
+    }
 }
