@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Pipeline;
+use Xendit\Configuration;
+use Xendit\Invoice\InvoiceApi;
 
 class TransactionController extends Controller
 {
@@ -20,13 +22,7 @@ class TransactionController extends Controller
 
     public function __construct()
     {
-        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        \Midtrans\Config::$isProduction = env('MIDTRANS_PRODUCTION');
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
-        \Midtrans\Config::$appendNotifUrl = env('APP_URL');
-        \Midtrans\Config::$overrideNotifUrl = env('APP_URL');
-        \Midtrans\Config::$paymentIdempotencyKey = env('MIDTRANS_IDEMPOTENCY_KEY');
+        Configuration::setXenditKey(config('xendit.api_key'));
     }
 
     public function index(Request $request)
@@ -93,91 +89,80 @@ class TransactionController extends Controller
             $transaction->invoice_number = $transaction->invoice_number . '.' . $transaction->id;
             $transaction->save();
 
+
+            $apiInstance = new InvoiceApi();
             $params = array(
-                'enable_payments' => [
-                    'credit_card', 'mandiri_clickpay', 'cimb_clicks',
-                    'bca_klikbca', 'bca_klikpay', 'bri_epay', 'echannel', 'permata_va',
-                    'bca_va', 'bni_va', 'other_va', 'gopay', 'indomaret',
-                    'danamon_online', 'akulaku'
-                ],
-                'transaction_details' => [
-                    'order_id' => $transaction->invoice_number,
-                    'gross_amount' => $transaction->subtotal,
-                ],
-                'item_details' => [
-                    [
-                        'id' => $product->id,
-                        'name' => $product->name,
-                        'price' => $transaction->subtotal,
-                        'quantity' => 1,
-                    ]
-                ],
-                'customer_details' => [
-                    'first_name' => Auth::user()->name,
-                    'phone' => $request->phone,
-                ],
+                'external_id' => $transaction->invoice_number,
+                'description' => "Payment for " .  $product->name . " by " . $request->user()->name,
+                'amount' => $transaction->subtotal,
+                'invoice_duration' => 10,
+                'currency' => 'IDR',
+                'success_redirect_url' => env('WEB_URL') . '/transaction',
+                'failure_redirect_url' => env('WEB_URL') . '/transaction',
+                'remainder_time' => 1,
             );
 
-            $snap = \Midtrans\Snap::createTransaction($params);
 
-            $transaction->payment_url = $snap->redirect_url;
+            $invoice = $apiInstance->createInvoice($params);
+
+            $transaction->payment_url = $invoice['invoice_url'];
             $transaction->save();
 
             DB::commit();
 
             return $this->sendResponse([
                 'message' => 'Transaction checkout successfully.',
-                'payment_url' => $snap->redirect_url,
+                'payment_url' => $transaction->payment_url,
             ]);
         } catch (\Exception $e) {
+            if($e instanceof \Xendit\XenditSdkException) {
+                return $this->sendResponse($e->getFullError(), 500);
+            }
             return $this->sendResponse($e->getMessage());
         }
     }
 
     public function callback(Request $request)
     {
-        $transactionId =  @explode('.', $request->order_id)[1];
-        if (!$transactionId) {
-            return 'Transaction Not Found.';
-        }
-
         PaymentLog::create([
             'url' => $request->url(),
             'method' => $request->method(),
-            'headers' => json_encode($request->header()),
+            'headers' => json_encode(collect($request->header())->transform(function ($item) {
+                return $item[0];
+            })),
             'body' => json_encode($request->all()),
-            'transaction_id' => $transactionId,
+            'external_id' => $request->external_id,
         ]);
 
-        $notif = new \Midtrans\Notification();
+        try {
+            if ($request->hasHeader('x-callback-token')) {
+                if ($request->header('x-callback-token') != config('xendit.callback_token')) {
+                    return $this->sendError(401, 'callback-token tidak valid');
+                } else {
+                    $apiInstance = new InvoiceApi();
+                    $result = $apiInstance->getInvoiceById($request->id);
+    
+                    $transaction = Transaction::whereInvoiceNumber($result['external_id'])->firstOrFail();
+                    if($transaction->status == 'pending') {
+                        if($result['status'] == "PAID" || $result['status'] == 'SETTLED') {
+                            $transaction->status = 'paid';
+                        } else if($result['status'] == "CANCEL"){
+                            $transaction->status = 'cancel';
+                        } else {
+                            $transaction->status = 'expired';
+                        }
+    
+                        $transaction->save(); 
+                        return $this->sendResponse('Success');                   
+                    }
 
-        $transaction = $notif->transaction_status;
-        $fraud = $notif->fraud_status;
-
-
-        $transaction = Transaction::find($transactionId);
-
-        if ($transaction == 'capture') {
-            if ($fraud == 'challenge') {
-                // TODO Set payment status in merchant's database to 'challenge'
-                $transaction->status = 'expired';
-            } else if ($fraud == 'accept') {
-                $transaction->status = 'paid';
+                    return $this->sendResponse('Transaction already', 400);
+                }
             }
-        } else if ($transaction == 'cancel') {
-            if ($fraud == 'challenge') {
-                // TODO Set payment status in merchant's database to 'failure'
-                $transaction->status = 'cancel';
-            } else if ($fraud == 'accept') {
-                // TODO Set payment status in merchant's database to 'failure'
-                $transaction->status = 'cancel';
-            }
-        } else if ($transaction == 'deny') {
-            $transaction->status = 'cancel';
-        } else if ($transaction == 'settlement') {
-            $transaction->status = 'paid';
+
+            return $this->sendResponse('Callback token invalid', 400);
+        } catch(\Exception $e) {
+            return $this->sendResponse($e->getMessage(), 500);
         }
-
-        $transaction->save();
     }
 }

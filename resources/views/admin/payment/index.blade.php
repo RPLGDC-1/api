@@ -50,8 +50,9 @@
                 <thead>
                   <tr>
                     <th>Method</th>
+                    <th>Headers</th>
                     <th>Body</th>
-                    <th>TransactionId</th>
+                    <th>ExternalID</th>
                     <th>Status</th>
                     <th>Date</th>
                   </tr>
@@ -61,10 +62,13 @@
                     <tr>
                       <td class="text-start">{{ $row->method }}</td>
                       <td>
+                        <pre class="prettyprint">{{ json_encode(json_decode($row->headers), JSON_PRETTY_PRINT) }}</pre>
+                      </td>
+                      <td>
                         <pre class="prettyprint">{{ json_encode(json_decode($row->body), JSON_PRETTY_PRINT) }}</pre>
                       </td>
-                      <td class="text-start">{{ $row->transactionId }}</td>
-                      <td class="text-start">{{ json_decode($row->body)->transaction_status }}</td>
+                      <td class="text-start">{{ $row->external_id }}</td>
+                      <td class="text-start">{{ json_decode($row->body)->status }}</td>
                       <td>{{ date("d F Y", strtotime($row->created_at)) }}</td>
                     </tr>
                   @endforeach
