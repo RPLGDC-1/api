@@ -55,14 +55,14 @@ jobs:
           ./get_helm.sh
 
       - name: Create kube directory
-        run: mkdir kube
+        run: mkdir $HOME/kube
 
       - name: Prepare Kubeconfig
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          echo "$KUBECONFIG" > kube/config
-          export KUBECONFIG=$(pwd)/kube/config
+          echo "$KUBECONFIG" > $HOME/kube/config
+          export KUBECONFIG=$HOME/kube/config
 
       - name: Repo List
         run: |
