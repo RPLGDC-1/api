@@ -48,16 +48,23 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
       
-      - name: 'Deploy'
-        uses: 'deliverybot/helm@v1'
+      - name: Install helm 3
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      - name: Set up Kubectl
+        uses: azure/setup-kubectl@v1
         with:
-          release: 'api-charts'
-          namespace: 'dunia-belanja'
-          chart: 'api-charts/api-charts'
-          token: '${{ secrets.PAT }}'
-          helm: helm3
-          repo: '${{ secrets.REPO_URL }}'
-          values: ./values.yaml
-        env:
-          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      
+      - name: Add to repo
+        run: |
+          helm repo add api-charts ${{ secrets.REPO_URL }}
+          helm repo update
+
+      - name: Deploy helm
+        run: |
+          helm upgrade --install api-charts api-charts/api-charts --set deployment.containers.image.tag=v-daa4f13 --values ./values.yaml -n dunia-belanja
 
