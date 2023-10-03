@@ -63,5 +63,5 @@ jobs:
       
       - name: Repo
         run: |
-          helm upgrade api-charts api-charts/api-charts -f ./values.yaml --set deployment.containers.image.tag=v-d7379e8 --namespace=dunia-belanja
+          helm install api-charts api-charts/api-charts --set deployment.containers.image.tag=v-daa4f13 --values ./values.yaml -n dunia-belanja
 
