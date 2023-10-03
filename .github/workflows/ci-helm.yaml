@@ -51,13 +51,15 @@ jobs:
       - name: Install helm
         run: curl -L https://git.io/get_helm.sh | bash
 
+      - name: Create kube directory
+        run: mkdir kube
+
       - name: Prepare Kubeconfig
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          echo "$KUBECONFIG" > ~/config
-          mkdir ~/.kube
-          mv ~/config ~/kube/
+          echo "$KUBECONFIG" > kube/config
+          export KUBECONFIG=$(pwd)/kube/config
       
       - name: Repo
         run: |
