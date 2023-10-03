@@ -60,7 +60,11 @@ jobs:
         run: |
           echo "$KUBECONFIG" > kube/config
           export KUBECONFIG=$(pwd)/kube/config
-      
+          
+      - name: Repo List
+        run: |
+          helm repo list -n dunia-belanja
+
       - name: Repo
         run: |
           helm install api-charts api-charts/api-charts --set deployment.containers.image.tag=v-daa4f13 --values ./values.yaml -n dunia-belanja
