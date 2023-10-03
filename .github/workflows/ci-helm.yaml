@@ -1,0 +1,65 @@
+name: Gitops-CI
+on: 
+  push:
+    tags:
+      - 'k8s-v*-helm*'
+
+jobs: 
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    
+    outputs:
+      output_sha: ${{ steps.sha.outputs.short_sha}}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Login to docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Get short of git commit hash
+        id: sha
+        run: |
+          git_hash=$(git describe --match 'v[0-9]*' --tags --always)
+          echo "::set-output name=short_sha::$git_hash"
+      
+      - name: Print short commit sha
+        run: echo ${{ steps.sha.outputs.short_sha }}
+      
+      - name: Build and push docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:v-${{ steps.sha.outputs.short_sha }}
+  
+  deploy_helm:
+    name: deploy
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      
+      - name: Install helm
+        run: curl -L https://git.io/get_helm.sh | bash
+
+      - name: Prepare Kubeconfig
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          echo "$KUBECONFIG" > ~/kubeconfig.yaml
+          mkdir ~/.kube
+          mv ~/kubeconfig.yaml ~/kube/config
+      
+      - name: Repo
+        run: |
+          helm upgrade api-charts api-charts/api-charts -f ./values.yaml --set deployment.containers.image.tag=${{ github.ref_name }} --namespace=dunia-belanja
+
