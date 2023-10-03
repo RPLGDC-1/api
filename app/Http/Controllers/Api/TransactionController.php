@@ -95,10 +95,10 @@ class TransactionController extends Controller
                 'external_id' => $transaction->invoice_number,
                 'description' => "Payment for " .  $product->name . " by " . $request->user()->name,
                 'amount' => $transaction->subtotal,
-                'invoice_duration' => 10,
+                'invoice_duration' => 10000,
                 'currency' => 'IDR',
-                'success_redirect_url' => env('WEB_URL') . '/transaction',
-                'failure_redirect_url' => env('WEB_URL') . '/transaction',
+                'success_redirect_url' => env('WEB_URL') . '/orders',
+                'failure_redirect_url' => env('WEB_URL') . '/orders',
                 'remainder_time' => 1,
             );
 
@@ -139,14 +139,11 @@ class TransactionController extends Controller
                 if ($request->header('x-callback-token') != config('xendit.callback_token')) {
                     return $this->sendError(401, 'callback-token tidak valid');
                 } else {
-                    $apiInstance = new InvoiceApi();
-                    $result = $apiInstance->getInvoiceById($request->id);
-    
-                    $transaction = Transaction::whereInvoiceNumber($result['external_id'])->firstOrFail();
+                    $transaction = Transaction::whereInvoiceNumber($request->external_id)->firstOrFail();
                     if($transaction->status == 'pending') {
-                        if($result['status'] == "PAID" || $result['status'] == 'SETTLED') {
+                        if($transaction->status == "PAID" || $transaction->status == 'SETTLED') {
                             $transaction->status = 'paid';
-                        } else if($result['status'] == "CANCEL"){
+                        } else if($transaction->status == "CANCEL"){
                             $transaction->status = 'cancel';
                         } else {
                             $transaction->status = 'expired';
