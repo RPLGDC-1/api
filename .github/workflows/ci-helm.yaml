@@ -48,27 +48,16 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
       
-      - name: Install helm 3
-        run: |
-          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-          chmod 700 get_helm.sh
-          ./get_helm.sh
-
-      - name: Create kube directory
-        run: mkdir $HOME/kube
-
-      - name: Prepare Kubeconfig
+      - name: 'Deploy'
+        uses: 'deliverybot/helm@v1'
+        with:
+          release: 'api-charts'
+          namespace: 'dunia-belanja'
+          chart: 'api-charts/api-charts'
+          token: '${{ secrets.PAT }}'
+          helm: helm3
+          repo: '${{ secrets.REPO_URL }}'
+          values: ./values.yaml
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        run: |
-          echo "$KUBECONFIG" > $HOME/kube/config
-          export KUBECONFIG=$HOME/kube/config
-
-      - name: Repo List
-        run: |
-          helm repo list -n dunia-belanja
-
-      - name: Repo
-        run: |
-          helm install api-charts api-charts/api-charts --set deployment.containers.image.tag=v-daa4f13 --values ./values.yaml -n dunia-belanja
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
 
