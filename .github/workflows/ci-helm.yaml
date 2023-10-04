@@ -45,5 +45,5 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
         with:
           args: |
-            helm repo add api-charts ${{ secrets.REPO_URL }}
+            helm repo add api-charts https://${{ github.token }}@raw.githubusercontent.com/RPLGDC-1/helm-chart-api/main/
             helm upgrade --install api-charts api-charts/api-charts -f ./values.yaml --set deployment.containers.image.tag=${{ github.ref_name }} -n dunia-belanja
