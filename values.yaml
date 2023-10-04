@@ -10,10 +10,9 @@ deployment:
 
 # Service Section
 service:
-  ports:
-    port: 80
-    targetPort: 9000
-    protocol: TCP
+  port: 80
+  targetPort: 9000
+  protocol: TCP
 
 podAnnotations: {}
 
