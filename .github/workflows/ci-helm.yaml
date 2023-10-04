@@ -54,7 +54,7 @@ jobs:
           namespace: 'dunia-belanja'
           chart: 'api-charts/api-charts'
           token: '${{ secrets.PAT }}'
-          values-file: 'values.yaml'
+          value-files: 'values.yaml'
           repo-alias: 'api-charts'
           repo: 'https://@raw.githubusercontent.com/RPLGDC-1/helm-chart-api/main/'
           repo-username: yazidalg
