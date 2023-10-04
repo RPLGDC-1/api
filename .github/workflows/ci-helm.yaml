@@ -1,7 +1,8 @@
 name: Gitops-CI
 on: 
   push:
-    branches: [feature/helm]
+    tags:
+      - 'k8s-v*-helm*'
 
 jobs: 
   # build:
