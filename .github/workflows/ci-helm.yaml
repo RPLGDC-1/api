@@ -55,7 +55,6 @@ jobs:
           chart: 'api-charts/api-charts'
           token: '${{ secrets.PAT }}'
           values: ./values.yaml
-          helm: helm3
           repo-alias: 'api-charts'
           repo: 'https://@raw.githubusercontent.com/RPLGDC-1/helm-chart-api/main/'
         env:
