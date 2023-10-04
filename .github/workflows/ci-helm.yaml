@@ -48,17 +48,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy Helm
-        uses: 'vimeda/helm@v1.7.0'
-        with:
-          release: 'api-charts'
-          namespace: 'dunia-belanja'
-          chart: 'api-charts/api-charts'
-          token: '${{ secrets.PAT }}'
-          value-files: 'values.yaml'
-          repo-alias: 'api-charts'
-          repo: 'https://@raw.githubusercontent.com/RPLGDC-1/helm-chart-api/main/'
-          repo-username: yazidalg'
-          repo-password: '${{ secrets.PAT }}'
+        uses: wahyd4/kubectl-helm-action@master
         env:
-          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
-
+          KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
+        with:
+          args: |
+            helm repo add api-charts ${{ secrets.REPO_URL }}
+            helm upgrade --install api-charts api-charts/api-charts -n dunia-belanja
