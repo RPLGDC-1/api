@@ -57,6 +57,8 @@ jobs:
           values: values.yaml
           repo-alias: 'api-charts'
           repo: 'https://@raw.githubusercontent.com/RPLGDC-1/helm-chart-api/main/'
+          repo-username: yazidalg
+          repo-password: ${{ secrets.PAT }}
         env:
           KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
 
