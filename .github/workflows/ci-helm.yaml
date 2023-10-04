@@ -54,4 +54,4 @@ jobs:
         with:
           args: |
             helm repo add api-charts ${{ secrets.REPO_URL }}
-            helm upgrade --install api-charts api-charts/api-charts --set deployment.containers.image.tag=${{ github.ref_name }} -n dunia-belanja
+            helm upgrade --install api-charts api-charts/api-charts -f ./values.yaml --set deployment.containers.image.tag=${{ github.ref_name }} -n dunia-belanja
