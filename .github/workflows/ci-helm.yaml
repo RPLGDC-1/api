@@ -1,8 +1,7 @@
 name: Gitops-CI
 on: 
   push:
-    tags:
-      - 'k8s-v*-helm*'
+    branches: [feature/helm]
 
 jobs: 
   # build:
@@ -54,5 +53,6 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
         with:
           args: |
+            cat /tmp/config
             helm repo add api-charts ${{ secrets.REPO_URL }}
             helm upgrade --install api-charts api-charts/api-charts --set deployment.containers.image.tag=${{ github.ref_name }} -n dunia-belanja
