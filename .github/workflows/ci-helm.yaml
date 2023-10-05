@@ -2,70 +2,48 @@ name: Gitops-CI
 on: 
   push:
     tags:
-      - 'k8s-v*-helm*'
+    - 'k8s-v*-helm*'
 
 jobs: 
-  # build:
-  #   name: build
-  #   runs-on: ubuntu-latest
+  build:
+    name: build
+    runs-on: ubuntu-latest
     
-  #   outputs:
-  #     output_sha: ${{ steps.sha.outputs.short_sha}}
+    outputs:
+      output_sha: ${{ steps.sha.outputs.short_sha}}
 
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-  #     - name: Login to docker
-  #       uses: docker/login-action@v2
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-  #     - name: Get short of git commit hash
-  #       id: sha
-  #       run: |
-  #         git_hash=$(git describe --match 'v[0-9]*' --tags --always)
-  #         echo "::set-output name=short_sha::$git_hash"
-      
-  #     - name: Print short commit sha
-  #       run: echo ${{ steps.sha.outputs.short_sha }}
-      
-  #     - name: Build and push docker image
-  #       uses: docker/build-push-action@v4
-  #       with:
-  #         push: true
-  #         tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:v-${{ steps.sha.outputs.short_sha }}
+      - name: Build and push docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:${{ github.ref_name }}
   
   deploy_helm:
     name: deploy
     runs-on: ubuntu-latest
-    # needs: build
+    needs: build
     permissions:
       contents: write
 
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-      
-      - name: Install helm
-        run: curl -L https://git.io/get_helm.sh | bash
 
-      - name: Create kube directory
-        run: mkdir kube
-
-      - name: Prepare Kubeconfig
+      - name: Deploy Helm
+        uses: wahyd4/kubectl-helm-action@master
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        run: |
-          echo "$KUBECONFIG" > kube/config
-          export KUBECONFIG=$(pwd)/kube/config
-          
-      - name: Repo List
-        run: |
-          helm repo list -n dunia-belanja
-
-      - name: Repo
-        run: |
-          helm install api-charts api-charts/api-charts --set deployment.containers.image.tag=v-daa4f13 --values ./values.yaml -n dunia-belanja
-
+          KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
+        with:
+          args: |
+            helm repo add api-charts https://${{ github.token }}@raw.githubusercontent.com/RPLGDC-1/helm-chart-api/main/
+            helm upgrade --install api-charts api-charts/api-charts -f ./values.yaml --set deployment.containers.image.tag=${{ github.ref_name }} -n dunia-belanja
