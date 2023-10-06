@@ -1,0 +1,75 @@
+name: Gitops-CI
+on: 
+  pull_request_review:
+    types:
+      - submitted
+env:
+  SHA: 
+
+jobs: 
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    outputs:
+      output_sha: ${{ steps.sha.outputs.short_sha}}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Login to docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Get short of git commit hash
+        id: sha
+        run: |
+          git_hash=$(git describe --match 'v[0-9]*' --tags --always)
+          echo "::set-output name=short_sha::$git_hash"
+      
+      - name: Print short commit sha
+        run: echo ${{ steps.sha.outputs.short_sha }}
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api:v-${{ steps.sha.outputs.short_sha }}
+
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          repository: 'RPLGDC-1/infra-api'
+          token: ${{ secrets.PAT }}
+
+      - name: Setup git
+        run: |
+          git config user.email "yazid.al2418@gmail.com"
+          git config user.name "Yazid Al Ghozali"
+      
+      - name: Update deployment
+        env:
+          OUTPUT_SHA: ${{ needs.build.outputs.output_sha}}
+        run: |
+          sed -i "s#image: 211104/api:v-.*#image: 211104/api:v-$OUTPUT_SHA#" deployment.yaml
+          cat deployment.yaml
+      - name: Check Working Tree
+        run: git status
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          OUTPUT_SHA: ${{ needs.build.outputs.output_sha}}
+        with:
+          commit_message: "Update image with version: v-$OUTPUT_SHA"
