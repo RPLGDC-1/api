@@ -23,7 +23,7 @@ class Product extends Model
 
     public function getImageAttribute()
     {
-        return $this->attributes['image'] ? asset('storage/products/' . $this->attributes['image']) : asset('img/default/products.png');
+        return  'https://admin-duniabelanja.krobot.my.id/storage/products/' . $this->attributes['image'];
     }
 
     public function getRawImageAttribute()
