@@ -115,7 +115,7 @@ class TransactionController extends Controller
                 'payment_url' => $transaction->payment_url,
             ]);
         } catch (\Exception $e) {
-            if($e instanceof \Xendit\XenditSdkException) {
+            if ($e instanceof \Xendit\XenditSdkException) {
                 return $this->sendResponse($e->getFullError(), 500);
             }
             return $this->sendResponse($e->getMessage());
@@ -140,17 +140,17 @@ class TransactionController extends Controller
                     return $this->sendError(401, 'callback-token tidak valid');
                 } else {
                     $transaction = Transaction::whereInvoiceNumber($request->external_id)->firstOrFail();
-                    if($transaction->status == 'pending') {
-                        if($transaction->status == "PAID" || $transaction->status == 'SETTLED') {
+                    if ($transaction->status == 'pending') {
+                        if ($request->status == "PAID" || $request->status == 'SETTLED') {
                             $transaction->status = 'paid';
-                        } else if($transaction->status == "CANCEL"){
+                        } else if ($request->status == "CANCEL") {
                             $transaction->status = 'cancel';
                         } else {
                             $transaction->status = 'expired';
                         }
-    
-                        $transaction->save(); 
-                        return $this->sendResponse('Success');                   
+
+                        $transaction->save();
+                        return $this->sendResponse('Success');
                     }
 
                     return $this->sendResponse('Transaction already', 400);
@@ -158,7 +158,7 @@ class TransactionController extends Controller
             }
 
             return $this->sendResponse('Callback token invalid', 400);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse($e->getMessage(), 500);
         }
     }
