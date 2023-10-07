@@ -89,6 +89,10 @@ class TransactionController extends Controller
             $transaction->invoice_number = $transaction->invoice_number . '.' . $transaction->id;
             $transaction->save();
 
+            $product->sales = $product->sales + 1;
+            $product->quantity = $product->quantity - 1;
+            $product->save();
+
 
             $apiInstance = new InvoiceApi();
             $params = array(
