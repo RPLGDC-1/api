@@ -39,8 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/categories', CategoryController::class)->middleware('can:category');
     Route::resource('/admins', AdminController::class)->middleware('can:admin');
     Route::resource('/customers', CustomerController::class)->middleware('can:customer');
-    Route::resource('/permissions', PermissionController::class)->middleware('can:permission');
-    Route::resource('/roles', RoleController::class)->middleware('can:role');
+    Route::resource('/permissions', PermissionController::class);
+    Route::resource('/roles', RoleController::class);
     Route::get('/order/recents', [RecentOrderController::class, 'index'])->name('recent_orders.index')->middleware('can:recent_order');
     Route::get('/product/populars', [ProductPopularController::class, 'index'])->name('product_populars.index')->middleware('can:product_product');
     Route::get('/sales', [SalesController::class, 'index'])->name('sales.index')->middleware('can:sales');
