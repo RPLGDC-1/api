@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/permissions', PermissionController::class);
     Route::resource('/roles', RoleController::class);
     Route::get('/order/recents', [RecentOrderController::class, 'index'])->name('recent_orders.index')->middleware('can:recent_order');
-    Route::get('/product/populars', [ProductPopularController::class, 'index'])->name('product_populars.index')->middleware('can:product_product');
+    Route::get('/product/populars', [ProductPopularController::class, 'index'])->name('product_populars.index')->middleware('can:product_popular');
     Route::get('/sales', [SalesController::class, 'index'])->name('sales.index')->middleware('can:sales');
     Route::get('/sales/{transaction}', [SalesController::class, 'show'])->name('sales.show')->middleware('can:sales');
     Route::post('/sales/{transaction}', [SalesController::class, 'process'])->middleware('can:sales');
